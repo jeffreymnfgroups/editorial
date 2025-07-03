@@ -1,45 +1,128 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowDown, Mail, Search, FileText, BarChart3, CircleArrowRight, TrendingUp, Users, Download, Play, ExternalLink, Zap, Code, Layers } from 'lucide-react';
+import { ArrowDown, FileText, BarChart3, CircleArrowRight, TrendingUp, Users, Download, Play, Zap, Code, Layers } from 'lucide-react';
+
+// Components
+import Navigation from '@/components/Navigation';
+import SearchBar from '@/components/SearchBar';
+import ArticleCard from '@/components/ArticleCard';
+import NewsletterSignup from '@/components/NewsletterSignup';
+
+// Assets
 import author1 from '@/assets/author-1.jpg';
 import author2 from '@/assets/author-2.jpg';
 import playbookCover from '@/assets/playbook-1.jpg';
 
 const Index = () => {
-  const [email, setEmail] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredArticles, setFilteredArticles] = useState<any[]>([]);
   const { toast } = useToast();
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) {
-      toast({
-        title: "Email required",
-        description: "Please enter your email address",
-        variant: "destructive",
-      });
-      return;
+  const allArticles = [
+    {
+      id: 1,
+      title: "Building Scalable SaaS Architecture",
+      excerpt: "Modern patterns for building resilient, scalable applications",
+      fullContent: "In this comprehensive guide, we'll explore the fundamental principles of building scalable SaaS architecture. From microservices to database sharding, learn how to design systems that can handle millions of users while maintaining performance and reliability.",
+      author: "Marcus Johnson",
+      date: "Dec 12, 2024",
+      topic: "Development",
+      readTime: "8 min",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=450&fit=crop"
+    },
+    {
+      id: 2,
+      title: "Product-Led Growth Strategies",
+      excerpt: "How to build products that sell themselves through user experience",
+      fullContent: "Product-led growth is revolutionizing how companies acquire, activate, and retain customers. Discover the strategies used by companies like Slack, Dropbox, and Zoom to create viral growth loops and reduce customer acquisition costs.",
+      author: "Elena Rodriguez", 
+      date: "Dec 10, 2024",
+      topic: "Product",
+      readTime: "12 min",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop"
+    },
+    {
+      id: 3,
+      title: "Design Systems at Scale",
+      excerpt: "Creating consistent, maintainable design languages for growing teams",
+      fullContent: "As your team grows, maintaining design consistency becomes increasingly challenging. Learn how to build and maintain design systems that scale with your organization while empowering designers and developers to work more efficiently.",
+      author: "Sarah Chen",
+      date: "Dec 8, 2024",
+      topic: "Design",
+      readTime: "10 min",
+      image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=450&fit=crop"
+    },
+    {
+      id: 4,
+      title: "Building Your First SaaS in 30 Days",
+      excerpt: "A step-by-step guide to launching your minimum viable product",
+      fullContent: "From idea to launch in just 30 days. This practical guide walks you through every step of building and launching your first SaaS product, including market validation, MVP development, and customer acquisition strategies.",
+      author: "Alex Rivera",
+      date: "Dec 14, 2024",
+      topic: "Tutorial",
+      readTime: "12 min",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop"
+    },
+    {
+      id: 5,
+      title: "The Psychology of Product Pricing",
+      excerpt: "How to price your product for maximum conversion and growth",
+      fullContent: "Pricing is both an art and a science. Understand the psychological principles behind effective pricing strategies and learn how to optimize your pricing for different customer segments and market conditions.",
+      author: "Maya Patel",
+      date: "Dec 13, 2024", 
+      topic: "Strategy",
+      readTime: "8 min",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop"
+    },
+    {
+      id: 6,
+      title: "No-Code vs Low-Code: Which to Choose?",
+      excerpt: "Comparing platforms and making the right choice for your project",
+      fullContent: "The no-code and low-code movement is democratizing software development. Learn the key differences between these approaches and how to choose the right platform for your specific use case and technical requirements.",
+      author: "Jordan Kim",
+      date: "Dec 12, 2024",
+      topic: "Development",
+      readTime: "10 min",
+      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&h=450&fit=crop"
     }
-    toast({
-      title: "Successfully subscribed!",
-      description: "Welcome to MakerStack. Check your inbox for confirmation.",
-    });
-    setEmail('');
-  };
+  ];
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchQuery) return;
-    toast({
-      title: "Search initiated",
-      description: `Searching for "${searchQuery}"...`,
-    });
-  };
+  const topics = [
+    { name: "All", count: 541 },
+    { name: "Development", count: 142 },
+    { name: "Design", count: 98 },
+    { name: "Product", count: 76 },
+    { name: "Growth", count: 54 },
+    { name: "Analytics", count: 89 },
+    { name: "Strategy", count: 67 },
+    { name: "Marketing", count: 43 },
+    { name: "Startup", count: 32 }
+  ];
+
+  useEffect(() => {
+    let filtered = allArticles;
+
+    // Filter by topic
+    if (selectedTopic !== 'All') {
+      filtered = filtered.filter(article => article.topic === selectedTopic);
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(article =>
+        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.topic.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.author.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setFilteredArticles(filtered);
+  }, [selectedTopic, searchQuery]);
 
   const handleDownload = (title: string) => {
     toast({
@@ -60,67 +143,27 @@ const Index = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const topics = [
-    { name: "All", count: 541 },
-    { name: "Development", count: 142 },
-    { name: "Design", count: 98 },
-    { name: "Product", count: 76 },
-    { name: "Growth", count: 54 },
-    { name: "Analytics", count: 89 },
-    { name: "Strategy", count: 67 },
-    { name: "Marketing", count: 43 },
-    { name: "Startup", count: 32 }
-  ];
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
-  const filteredArticles = [
-    {
-      title: "Building Scalable SaaS Architecture",
-      excerpt: "Modern patterns for building resilient, scalable applications",
-      author: "Marcus Johnson",
-      date: "Dec 12, 2024",
-      topic: "Development",
-      readTime: "8 min"
-    },
-    {
-      title: "Product-Led Growth Strategies",
-      excerpt: "How to build products that sell themselves through user experience",
-      author: "Elena Rodriguez", 
-      date: "Dec 10, 2024",
-      topic: "Product",
-      readTime: "12 min"
-    },
-    {
-      title: "Design Systems at Scale",
-      excerpt: "Creating consistent, maintainable design languages for growing teams",
-      author: "Sarah Chen",
-      date: "Dec 8, 2024",
-      topic: "Design",
-      readTime: "10 min"
-    }
-  ].filter(article => selectedTopic === 'All' || article.topic === selectedTopic);
+  const handleClearSearch = () => {
+    setSearchQuery('');
+  };
+
+  const handleArticleClick = (articleId: number) => {
+    toast({
+      title: "Article opened",
+      description: "Navigating to full article...",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-xl border-b border-border/40">
-        <div className="container-premium flex items-center justify-between h-16">
-          <div className="text-xl font-semibold tracking-tight">MakerStack</div>
-          <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('featured')} className="text-muted-foreground hover:text-foreground transition-colors">Featured</button>
-            <button onClick={() => scrollToSection('playbooks')} className="text-muted-foreground hover:text-foreground transition-colors">Playbooks</button>
-            <button onClick={() => scrollToSection('tools')} className="text-muted-foreground hover:text-foreground transition-colors">Tools</button>
-            <button onClick={() => scrollToSection('reports')} className="text-muted-foreground hover:text-foreground transition-colors">Reports</button>
-          </div>
-          <Button 
-            onClick={() => scrollToSection('subscribe')}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Upgrade
-          </Button>
-        </div>
-      </nav>
+      <Navigation onSectionClick={scrollToSection} />
 
-      {/* Hero Section - Clean without background */}
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-gradient-to-br from-background via-surface-elevated to-surface-secondary">
         <div className="container-premium relative z-10 text-center animate-fade-in">
           <div className="max-w-5xl mx-auto">
@@ -131,22 +174,9 @@ const Index = () => {
               Premium insights, tools, and frameworks for makers building the future
             </p>
             
-            {/* Newsletter Signup */}
-            <form onSubmit={handleSubscribe} className="max-w-md mx-auto mb-8">
-              <div className="flex gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/70 backdrop-blur-sm border border-border/60 rounded-xl h-12"
-                />
-                <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl h-12">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Subscribe
-                </Button>
-              </div>
-            </form>
+            <div className="max-w-md mx-auto mb-8">
+              <NewsletterSignup variant="hero" />
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
@@ -165,29 +195,18 @@ const Index = () => {
       {/* Search Section */}
       <section id="search" className="section-padding bg-surface-secondary/50">
         <div className="container-premium">
-          <div className="max-w-2xl mx-auto">
-            <form onSubmit={handleSearch} className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search articles, playbooks, and tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-6 text-lg rounded-2xl border-border/40 bg-background/80 backdrop-blur-sm shadow-lg focus:shadow-xl transition-all duration-300"
-              />
-              <Button 
-                type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-xl"
-                size="sm"
-              >
-                Search
-              </Button>
-            </form>
-          </div>
+          <SearchBar onSearch={handleSearch} onClear={handleClearSearch} />
+          {searchQuery && (
+            <div className="text-center mt-6">
+              <p className="text-muted-foreground">
+                Found {filteredArticles.length} results for "{searchQuery}"
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Featured Section - Bento Grid */}
+      {/* Featured Section */}
       <section id="featured" className="section-padding">
         <div className="container-premium">
           <div className="text-center mb-16">
@@ -208,96 +227,29 @@ const Index = () => {
                     ? 'bg-primary text-primary-foreground shadow-lg'
                     : 'bg-surface-elevated hover:bg-surface-secondary text-muted-foreground hover:text-foreground'
                 }`}
+                aria-pressed={selectedTopic === topic.name}
               >
                 {topic.name} ({topic.count})
               </button>
             ))}
           </div>
           
-          {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {/* Featured Article - Large */}
-            <Card className="lg:col-span-2 lg:row-span-2 bg-gradient-to-br from-card via-card to-surface-elevated border border-border/40 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden cursor-pointer">
-              <div className="h-full flex flex-col">
-                <div className="aspect-video bg-gradient-to-br from-primary/10 via-primary/5 to-transparent flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <Code className="h-16 w-16 text-primary/40 group-hover:text-primary/60 transition-colors duration-500" />
-                  <div className="absolute top-4 right-4">
-                    <Play className="h-8 w-8 text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                </div>
-                <CardContent className="p-8 flex-1 flex flex-col justify-between">
-                  <div>
-                    <Badge className="w-fit mb-4 bg-primary/10 text-primary border-primary/20 rounded-full px-4 py-1">Featured</Badge>
-                    <h3 className="text-2xl font-semibold mb-4 group-hover:text-primary transition-colors line-clamp-2">
-                      The Future of No-Code Development
-                    </h3>
-                    <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
-                      How visual development platforms are democratizing software creation and empowering a new generation of makers.
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <img src={author1} alt="Author" className="w-12 h-12 rounded-full object-cover" />
-                      <div>
-                        <p className="font-medium">Sarah Chen</p>
-                        <p className="text-sm text-muted-foreground">Dec 15, 2024 • 15 min read</p>
-                      </div>
-                    </div>
-                    <Button variant="ghost" size="sm" className="rounded-full hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110">
-                      <CircleArrowRight className="h-5 w-5" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-
-            {/* Stats Cards */}
-            <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="bg-primary/10 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                  <Users className="h-8 w-8 text-primary" />
-                </div>
-                <div className="text-3xl font-light text-primary mb-2">24.7k</div>
-                <div className="text-sm text-muted-foreground">Active Makers</div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <div className="bg-primary/10 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                  <Zap className="h-8 w-8 text-primary" />
-                </div>
-                <div className="text-3xl font-light text-primary mb-2">156</div>
-                <div className="text-sm text-muted-foreground">Tools Built</div>
-              </CardContent>
-            </Card>
-
-            {/* Article Cards */}
-            {filteredArticles.slice(0, 2).map((article, index) => (
-              <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer">
-                <CardContent className="p-6">
-                  <Badge className="w-fit mb-3 bg-surface-secondary text-muted-foreground border-border/40 rounded-full px-3 py-1 text-xs">
-                    {article.topic}
-                  </Badge>
-                  <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed line-clamp-2">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <img src={author2} alt="Author" className="w-8 h-8 rounded-full object-cover" />
-                      <div>
-                        <p className="text-sm font-medium">{article.author}</p>
-                        <p className="text-xs text-muted-foreground">{article.date} • {article.readTime}</p>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </div>
-                </CardContent>
-              </Card>
+          {/* Featured Articles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredArticles.slice(0, 3).map((article) => (
+              <ArticleCard
+                key={article.id}
+                title={article.title}
+                excerpt={article.excerpt}
+                fullContent={article.fullContent}
+                author={article.author}
+                date={article.date}
+                topic={article.topic}
+                readTime={article.readTime}
+                image={article.image}
+                searchQuery={searchQuery}
+                onClick={() => handleArticleClick(article.id)}
+              />
             ))}
           </div>
         </div>
@@ -323,6 +275,7 @@ const Index = () => {
                     src={playbookCover} 
                     alt="SaaS Launch Playbook"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium">
@@ -393,7 +346,7 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Right Side - 30% */}
+            {/* Right Side - 30% Trending Topics */}
             <div className="lg:col-span-3">
               <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg sticky top-24">
                 <CardContent className="p-6">
@@ -406,7 +359,12 @@ const Index = () => {
                       { topic: "Growth Hacking", engagement: "79%", trend: "+6%" },
                       { topic: "User Research", engagement: "76%", trend: "+11%" }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 rounded-xl hover:bg-surface-elevated transition-colors duration-300 cursor-pointer group">
+                      <button
+                        key={index}
+                        onClick={() => setSelectedTopic(item.topic)}
+                        className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-surface-elevated transition-colors duration-300 cursor-pointer group text-left"
+                        aria-label={`View ${item.topic} articles`}
+                      >
                         <div>
                           <p className="font-medium group-hover:text-primary transition-colors">{item.topic}</p>
                           <p className="text-sm text-muted-foreground">{item.engagement} engagement</p>
@@ -415,7 +373,7 @@ const Index = () => {
                           <p className="text-sm font-medium text-green-600">{item.trend}</p>
                           <TrendingUp className="h-4 w-4 text-green-600 ml-auto" />
                         </div>
-                      </div>
+                      </button>
                     ))}
                   </div>
                 </CardContent>
@@ -450,12 +408,6 @@ const Index = () => {
                 status: "Popular"
               },
               {
-                icon: <Search className="h-10 w-10" />,
-                title: "Market Validator",
-                description: "Research and validate your product ideas",
-                status: "Beta"
-              },
-              {
                 icon: <Code className="h-10 w-10" />,
                 title: "API Explorer",
                 description: "Discover and test APIs for your applications",
@@ -471,6 +423,12 @@ const Index = () => {
                 icon: <FileText className="h-10 w-10" />,
                 title: "Documentation Generator",
                 description: "Auto-generate docs from your codebase",
+                status: "Beta"
+              },
+              {
+                icon: <Users className="h-10 w-10" />,
+                title: "Team Collaboration Hub",
+                description: "Coordinate projects with your team members",
                 status: "Coming Soon"
               }
             ].map((tool, index) => (
@@ -547,84 +505,37 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Building Your First SaaS in 30 Days",
-                excerpt: "A step-by-step guide to launching your minimum viable product",
-                author: "Alex Rivera",
-                date: "Dec 14, 2024",
-                category: "Tutorial",
-                readTime: "12 min"
-              },
-              {
-                title: "The Psychology of Product Pricing",
-                excerpt: "How to price your product for maximum conversion and growth",
-                author: "Maya Patel",
-                date: "Dec 13, 2024", 
-                category: "Strategy",
-                readTime: "8 min"
-              },
-              {
-                title: "No-Code vs Low-Code: Which to Choose?",
-                excerpt: "Comparing platforms and making the right choice for your project",
-                author: "Jordan Kim",
-                date: "Dec 12, 2024",
-                category: "Development",
-                readTime: "10 min"
-              },
-              {
-                title: "User Onboarding That Converts",
-                excerpt: "Design patterns and strategies for better user activation",
-                author: "Sam Chen",
-                date: "Dec 11, 2024",
-                category: "UX Design",
-                readTime: "15 min"
-              },
-              {
-                title: "Scaling Your Side Project",
-                excerpt: "When and how to transition from hobby to business",
-                author: "Taylor Swift",
-                date: "Dec 10, 2024",
-                category: "Business",
-                readTime: "11 min"
-              },
-              {
-                title: "API-First Development Approach",
-                excerpt: "Building scalable applications with API-first architecture",
-                author: "Chris Park",
-                date: "Dec 9, 2024",
-                category: "Development",
-                readTime: "14 min"
-              }
-            ].map((article, index) => (
-              <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer">
-                <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-t-3xl flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <FileText className="h-12 w-12 text-primary/40 group-hover:text-primary/60 transition-colors duration-500" />
-                </div>
-                <CardContent className="p-6">
-                  <Badge className="w-fit mb-3 bg-surface-secondary text-muted-foreground border-border/40 rounded-full px-3 py-1 text-xs">
-                    {article.category}
-                  </Badge>
-                  <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed line-clamp-2">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium">{article.author}</p>
-                      <p className="text-xs text-muted-foreground">{article.date} • {article.readTime}</p>
-                    </div>
-                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary transition-colors">
-                      Read More
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            {filteredArticles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                title={article.title}
+                excerpt={article.excerpt}
+                fullContent={article.fullContent}
+                author={article.author}
+                date={article.date}
+                topic={article.topic}
+                readTime={article.readTime}
+                image={article.image}
+                searchQuery={searchQuery}
+                onClick={() => handleArticleClick(article.id)}
+              />
             ))}
           </div>
+          
+          {filteredArticles.length === 0 && searchQuery && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                No articles found matching "{searchQuery}"
+              </p>
+              <Button 
+                onClick={handleClearSearch}
+                variant="outline"
+                className="mt-4"
+              >
+                Clear Search
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -636,23 +547,7 @@ const Index = () => {
             <p className="text-xl text-muted-foreground mb-8 font-light">
               Get weekly insights, tools, and resources delivered to your inbox
             </p>
-            <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
-              <div className="flex gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/80 backdrop-blur-sm border border-border/60 rounded-xl h-12"
-                />
-                <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl h-12">
-                  Subscribe
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground mt-4">
-                No spam. Unsubscribe at any time.
-              </p>
-            </form>
+            <NewsletterSignup variant="footer" className="max-w-md mx-auto" />
           </div>
         </div>
       </section>
@@ -670,10 +565,10 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Content</h4>
               <div className="space-y-2">
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Articles</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Playbooks</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Tools</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Reports</button>
+                <button onClick={() => scrollToSection('featured')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Articles</button>
+                <button onClick={() => scrollToSection('playbooks')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Playbooks</button>
+                <button onClick={() => scrollToSection('tools')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Tools</button>
+                <button onClick={() => scrollToSection('reports')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Reports</button>
               </div>
             </div>
             <div>
