@@ -26,10 +26,10 @@ const ContentPage: React.FC<ContentPageProps> = ({
   onBack
 }) => {
   const typeColors = {
-    article: 'bg-blue-50 text-blue-700 border-blue-200',
-    tool: 'bg-purple-50 text-purple-700 border-purple-200',
-    playbook: 'bg-green-50 text-green-700 border-green-200',
-    featured: 'bg-orange-50 text-orange-700 border-orange-200'
+    article: 'bg-gray-100 text-gray-800 border-gray-200',
+    tool: 'bg-gray-900 text-white border-gray-800',
+    playbook: 'bg-white text-gray-900 border-gray-300',
+    featured: 'bg-black text-white border-gray-900'
   };
 
   return (
@@ -41,21 +41,21 @@ const ContentPage: React.FC<ContentPageProps> = ({
             <Button
               variant="ghost"
               onClick={onBack}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span>Back</span>
+              <span>Back to MakerStack</span>
             </Button>
             
             <div className="flex items-center space-x-3">
-              <Button variant="ghost" size="sm" className="rounded-full">
+              <Button variant="ghost" size="sm" className="rounded-full hover:bg-gray-100">
                 <Share2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="sm" className="rounded-full">
+              <Button variant="ghost" size="sm" className="rounded-full hover:bg-gray-100">
                 <Bookmark className="h-4 w-4" />
               </Button>
               {type === 'playbook' && (
-                <Button size="sm" className="rounded-full bg-blue-600 hover:bg-blue-700">
+                <Button size="sm" className="rounded-full bg-gray-900 hover:bg-gray-800 text-white">
                   <Download className="h-4 w-4 mr-2" />
                   Download
                 </Button>
@@ -68,7 +68,7 @@ const ContentPage: React.FC<ContentPageProps> = ({
       {/* Breadcrumb */}
       <div className="max-w-4xl mx-auto px-6 py-4">
         <nav className="flex items-center space-x-2 text-sm text-gray-500">
-          <button onClick={onBack} className="hover:text-gray-700">Home</button>
+          <button onClick={onBack} className="hover:text-gray-700 transition-colors">Home</button>
           <span>/</span>
           <span className="text-gray-900 capitalize">{type}</span>
         </nav>
@@ -100,7 +100,7 @@ const ContentPage: React.FC<ContentPageProps> = ({
           
           <div className="flex items-center space-x-6 text-gray-600">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center">
                 <User className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -130,13 +130,13 @@ const ContentPage: React.FC<ContentPageProps> = ({
         <div className="mt-12 p-8 bg-white rounded-3xl shadow-xl border border-gray-200">
           <h3 className="text-xl font-semibold mb-4 text-gray-900">What's next?</h3>
           <div className="flex flex-wrap gap-3">
-            <Button variant="outline" className="rounded-full">
+            <Button variant="outline" className="rounded-full border-gray-300 text-gray-700 hover:bg-gray-100">
               Share this {type}
             </Button>
-            <Button variant="outline" className="rounded-full">
+            <Button variant="outline" className="rounded-full border-gray-300 text-gray-700 hover:bg-gray-100">
               Save for later
             </Button>
-            <Button variant="outline" className="rounded-full">
+            <Button variant="outline" className="rounded-full border-gray-300 text-gray-700 hover:bg-gray-100">
               View similar content
             </Button>
           </div>

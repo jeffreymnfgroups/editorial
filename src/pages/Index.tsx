@@ -112,7 +112,6 @@ Advanced features include team collaboration, stack comparison matrices, and int
       author: 'Elena Rodriguez',
       readTime: '15 min read',
       date: 'Dec 10, 2024',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       onClick: handleCardClick
     },
     {
@@ -121,8 +120,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
       description: 'Choose the perfect tech stack for your project with AI-powered recommendations.',
       size: 'medium',
       type: 'tool',
-      icon: <Code className="h-6 w-6 text-white" />,
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      icon: <Code className="h-6 w-6 text-gray-600" />,
       onClick: handleCardClick
     },
     {
@@ -131,7 +129,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
       description: 'Create consistent, scalable design languages.',
       size: 'small',
       type: 'article',
-      icon: <Palette className="h-5 w-5 text-purple-600" />,
+      icon: <Palette className="h-5 w-5 text-gray-600" />,
       onClick: handleCardClick
     },
     {
@@ -140,7 +138,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
       description: 'Step-by-step guide to launching your SaaS.',
       size: 'small',
       type: 'playbook',
-      icon: <Rocket className="h-5 w-5 text-green-600" />,
+      icon: <Rocket className="h-5 w-5 text-gray-600" />,
       onClick: handleCardClick
     },
     {
@@ -149,7 +147,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
       description: 'Track and optimize your key metrics.',
       size: 'small',
       type: 'tool',
-      icon: <BarChart3 className="h-5 w-5 text-blue-600" />,
+      icon: <BarChart3 className="h-5 w-5 text-gray-600" />,
       onClick: handleCardClick
     },
     {
@@ -170,7 +168,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
       description: 'Optimize your pricing for maximum growth.',
       size: 'small',
       type: 'article',
-      icon: <Target className="h-5 w-5 text-orange-600" />,
+      icon: <Target className="h-5 w-5 text-gray-600" />,
       onClick: handleCardClick
     }
   ];
@@ -305,18 +303,18 @@ Advanced features include team collaboration, stack comparison matrices, and int
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
       <Navigation onSectionClick={scrollToSection} />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-gradient-to-br from-background via-surface-elevated to-surface-secondary">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-gradient-to-br from-white via-gray-50 to-gray-100">
         <div className="container-premium relative z-10 text-center animate-fade-in">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-light tracking-tight leading-none mb-8 bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-light tracking-tight leading-none mb-8 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 bg-clip-text text-transparent">
               MakerStack
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
               Premium insights, tools, and frameworks for makers building the future
             </p>
             
@@ -328,7 +326,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
               <Button 
                 onClick={() => scrollToSection('featured')}
                 variant="outline" 
-                className="bg-background/70 backdrop-blur-sm border border-border/60 hover:bg-background/90 text-foreground px-8 py-4 rounded-2xl text-lg font-medium transition-all duration-300 hover:shadow-lg"
+                className="bg-white/70 backdrop-blur-sm border border-gray-300 hover:bg-white text-gray-900 px-8 py-4 rounded-2xl text-lg font-medium transition-all duration-300 hover:shadow-lg"
               >
                 <ArrowDown className="mr-3 h-4 w-4" />
                 Explore Content
@@ -339,12 +337,12 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Search Section */}
-      <section id="search" className="section-padding bg-surface-secondary/50">
+      <section id="search" className="section-padding bg-white">
         <div className="container-premium">
           <SearchBar onSearch={handleSearch} onClear={handleClearSearch} />
           {searchQuery && (
             <div className="text-center mt-6">
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Found {filteredArticles.length} results for "{searchQuery}"
               </p>
             </div>
@@ -353,11 +351,11 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Featured Bento Grid Section */}
-      <section id="featured" className="section-padding">
+      <section id="featured" className="section-padding bg-gray-50">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Featured Content</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 text-gray-900">Featured Content</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
               Handpicked insights and resources for ambitious makers
             </p>
           </div>
@@ -370,8 +368,8 @@ Advanced features include team collaboration, stack comparison matrices, and int
                 onClick={() => setSelectedTopic(topic.name)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   selectedTopic === topic.name
-                    ? 'bg-primary text-primary-foreground shadow-lg'
-                    : 'bg-surface-elevated hover:bg-surface-secondary text-muted-foreground hover:text-foreground'
+                    ? 'bg-gray-900 text-white shadow-lg'
+                    : 'bg-white hover:bg-gray-100 text-gray-600 hover:text-gray-900 border border-gray-200'
                 }`}
                 aria-pressed={selectedTopic === topic.name}
               >
@@ -386,11 +384,11 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Playbooks Section - 70/30 Split */}
-      <section id="playbooks" className="section-padding bg-surface-secondary/30">
+      <section id="playbooks" className="section-padding bg-white">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Maker Playbooks</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 text-gray-900">Maker Playbooks</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
               Step-by-step guides and frameworks from successful makers
             </p>
           </div>
@@ -399,7 +397,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
             {/* Left Side - 70% */}
             <div className="lg:col-span-7 space-y-6">
               {/* Main Playbook Card */}
-              <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden hover:-translate-y-2 cursor-pointer">
+              <Card className="bg-white border border-gray-200 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden hover:-translate-y-2 cursor-pointer">
                 <div className="aspect-[16/9] overflow-hidden relative">
                   <img 
                     src={playbookCover} 
@@ -407,25 +405,25 @@ Advanced features include team collaboration, stack comparison matrices, and int
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-gray-900">
                     Premium
                   </div>
                 </div>
                 <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-semibold mb-4 group-hover:text-gray-600 transition-colors text-gray-900">
                     The Complete SaaS Launch Playbook
                   </h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                  <p className="text-gray-600 mb-6 leading-relaxed">
                     From idea validation to first paying customers. A comprehensive guide covering market research, MVP development, pricing strategy, and growth tactics.
                   </p>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-sm text-muted-foreground">4.2k downloads</span>
-                    <Badge className="bg-primary/10 text-primary border-primary/20">142 pages</Badge>
+                    <span className="text-sm text-gray-500">4.2k downloads</span>
+                    <Badge className="bg-gray-100 text-gray-800 border-gray-200">142 pages</Badge>
                   </div>
                   <Button 
                     onClick={() => handleDownload("SaaS Launch Playbook")}
-                    className="w-full rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300"
+                    className="w-full rounded-2xl bg-gray-900 hover:bg-gray-800 text-white transition-all duration-300"
                   >
                     <Download className="mr-2 h-4 w-4" />
                     Download Playbook
@@ -452,13 +450,13 @@ Advanced features include team collaboration, stack comparison matrices, and int
                     pages: "28"
                   }
                 ].map((playbook, index) => (
-                  <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer">
+                  <Card key={index} className="bg-white border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer">
                     <CardContent className="p-6">
-                      <div className="bg-primary/10 rounded-xl w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                        <FileText className="h-6 w-6 text-primary" />
+                      <div className="bg-gray-100 rounded-xl w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-gray-200 transition-colors duration-300">
+                        <FileText className="h-6 w-6 text-gray-600" />
                       </div>
-                      <h4 className="font-semibold mb-2 group-hover:text-primary transition-colors">{playbook.title}</h4>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                      <h4 className="font-semibold mb-2 group-hover:text-gray-600 transition-colors text-gray-900">{playbook.title}</h4>
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                         <span>{playbook.downloads} downloads</span>
                         <span>{playbook.pages} pages</span>
                       </div>
@@ -466,7 +464,7 @@ Advanced features include team collaboration, stack comparison matrices, and int
                         onClick={() => handleDownload(playbook.title)}
                         variant="outline" 
                         size="sm"
-                        className="w-full rounded-xl border-border/60 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                        className="w-full rounded-xl border-gray-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300"
                       >
                         Download
                       </Button>
@@ -478,9 +476,9 @@ Advanced features include team collaboration, stack comparison matrices, and int
 
             {/* Right Side - 30% Trending Topics */}
             <div className="lg:col-span-3">
-              <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg sticky top-24">
+              <Card className="bg-white border border-gray-200 rounded-3xl shadow-lg sticky top-24">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold mb-6">Trending Topics</h3>
+                  <h3 className="text-lg font-semibold mb-6 text-gray-900">Trending Topics</h3>
                   <div className="space-y-4">
                     {[
                       { topic: "AI Integration", engagement: "94%", trend: "+12%" },
@@ -492,12 +490,12 @@ Advanced features include team collaboration, stack comparison matrices, and int
                       <button
                         key={index}
                         onClick={() => setSelectedTopic(item.topic)}
-                        className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-surface-elevated transition-colors duration-300 cursor-pointer group text-left"
+                        className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors duration-300 cursor-pointer group text-left"
                         aria-label={`View ${item.topic} articles`}
                       >
                         <div>
-                          <p className="font-medium group-hover:text-primary transition-colors">{item.topic}</p>
-                          <p className="text-sm text-muted-foreground">{item.engagement} engagement</p>
+                          <p className="font-medium group-hover:text-gray-600 transition-colors text-gray-900">{item.topic}</p>
+                          <p className="text-sm text-gray-500">{item.engagement} engagement</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-medium text-green-600">{item.trend}</p>
@@ -514,11 +512,11 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Tools Section */}
-      <section id="tools" className="section-padding">
+      <section id="tools" className="section-padding bg-gray-50">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Maker Tools</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 text-gray-900">Maker Tools</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
               Powerful utilities to accelerate your building process
             </p>
           </div>
@@ -562,26 +560,26 @@ Advanced features include team collaboration, stack comparison matrices, and int
                 status: "Coming Soon"
               }
             ].map((tool, index) => (
-              <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group text-center hover:-translate-y-1 cursor-pointer">
+              <Card key={index} className="bg-white border border-gray-200 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group text-center hover:-translate-y-1 cursor-pointer">
                 <CardContent className="p-8">
                   <div className="relative">
-                    <div className="bg-primary/10 rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                      <div className="text-primary">
+                    <div className="bg-gray-100 rounded-3xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-200 group-hover:scale-110 transition-all duration-300">
+                      <div className="text-gray-600">
                         {tool.icon}
                       </div>
                     </div>
-                    <Badge className="absolute -top-2 -right-2 bg-primary/10 text-primary border-primary/20 rounded-full text-xs">
+                    <Badge className="absolute -top-2 -right-2 bg-gray-100 text-gray-800 border-gray-200 rounded-full text-xs">
                       {tool.status}
                     </Badge>
                   </div>
-                  <h3 className="text-xl font-semibold mb-4 group-hover:text-primary transition-colors">{tool.title}</h3>
-                  <p className="text-muted-foreground mb-8 leading-relaxed">
+                  <h3 className="text-xl font-semibold mb-4 group-hover:text-gray-600 transition-colors text-gray-900">{tool.title}</h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed">
                     {tool.description}
                   </p>
                   <Button 
                     onClick={() => handleToolLaunch(tool.title)}
                     variant="outline" 
-                    className="w-full rounded-2xl border-border/60 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                    className="w-full rounded-2xl border-gray-300 hover:bg-gray-900 hover:text-white hover:border-gray-900 transition-all duration-300"
                   >
                     Try Now
                   </Button>
@@ -593,11 +591,11 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Income Reports */}
-      <section id="reports" className="section-padding bg-surface-secondary/30">
+      <section id="reports" className="section-padding bg-white">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Growth Metrics</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 text-gray-900">Growth Metrics</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
               Transparent insights into our community growth and engagement
             </p>
           </div>
@@ -609,10 +607,10 @@ Advanced features include team collaboration, stack comparison matrices, and int
               { metric: "Tools Created", value: "156", change: "+31.5%", trend: "up" },
               { metric: "Community Growth", value: "89.3%", change: "+12.7%", trend: "up" }
             ].map((report, index) => (
-              <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
+              <Card key={index} className="bg-white border border-gray-200 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
                 <CardContent className="p-6">
-                  <div className="text-sm text-muted-foreground mb-2">{report.metric}</div>
-                  <div className="text-3xl font-light mb-2">{report.value}</div>
+                  <div className="text-sm text-gray-500 mb-2">{report.metric}</div>
+                  <div className="text-3xl font-light mb-2 text-gray-900">{report.value}</div>
                   <div className={`text-sm flex items-center ${report.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                     <TrendingUp className="h-4 w-4 mr-1" />
                     {report.change}
@@ -625,11 +623,11 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Latest Articles - Traditional Grid */}
-      <section className="section-padding">
+      <section className="section-padding bg-gray-50">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Latest Articles</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 text-gray-900">Latest Articles</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
               Fresh insights and tutorials from the maker community
             </p>
           </div>
@@ -654,13 +652,13 @@ Advanced features include team collaboration, stack comparison matrices, and int
           
           {filteredArticles.length === 0 && searchQuery && (
             <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">
+              <p className="text-gray-600 text-lg">
                 No articles found matching "{searchQuery}"
               </p>
               <Button 
                 onClick={handleClearSearch}
                 variant="outline"
-                className="mt-4"
+                className="mt-4 border-gray-300 text-gray-700 hover:bg-gray-100"
               >
                 Clear Search
               </Button>
@@ -670,11 +668,11 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Newsletter Subscription Section */}
-      <section id="subscribe" className="section-padding bg-surface-secondary/50">
+      <section id="subscribe" className="section-padding bg-white">
         <div className="container-premium">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Join the Community</h2>
-            <p className="text-xl text-muted-foreground mb-8 font-light">
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6 text-gray-900">Join the Community</h2>
+            <p className="text-xl text-gray-600 mb-8 font-light">
               Get weekly insights, tools, and resources delivered to your inbox
             </p>
             <NewsletterSignup variant="footer" className="max-w-md mx-auto" />
@@ -683,45 +681,45 @@ Advanced features include team collaboration, stack comparison matrices, and int
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/40 bg-surface-secondary/30 backdrop-blur-xl">
+      <footer className="border-t border-gray-200 bg-gray-50">
         <div className="container-premium py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="text-xl font-semibold mb-4">MakerStack</div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <div className="text-xl font-semibold mb-4 text-gray-900">MakerStack</div>
+              <p className="text-gray-600 text-sm leading-relaxed">
                 Empowering makers with premium insights, tools, and community.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Content</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Content</h4>
               <div className="space-y-2">
-                <button onClick={() => scrollToSection('featured')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Articles</button>
-                <button onClick={() => scrollToSection('playbooks')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Playbooks</button>
-                <button onClick={() => scrollToSection('tools')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Tools</button>
-                <button onClick={() => scrollToSection('reports')} className="block text-muted-foreground hover:text-primary transition-colors text-sm">Reports</button>
+                <button onClick={() => scrollToSection('featured')} className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Articles</button>
+                <button onClick={() => scrollToSection('playbooks')} className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Playbooks</button>
+                <button onClick={() => scrollToSection('tools')} className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Tools</button>
+                <button onClick={() => scrollToSection('reports')} className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Reports</button>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Community</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Community</h4>
               <div className="space-y-2">
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Discord</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Twitter</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">GitHub</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Newsletter</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Discord</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Twitter</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">GitHub</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Newsletter</button>
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Company</h4>
+              <h4 className="font-semibold mb-4 text-gray-900">Company</h4>
               <div className="space-y-2">
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">About</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Privacy</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Terms</button>
-                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Contact</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">About</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Privacy</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Terms</button>
+                <button className="block text-gray-600 hover:text-gray-900 transition-colors text-sm">Contact</button>
               </div>
             </div>
           </div>
-          <div className="border-t border-border/40 pt-8 text-center">
-            <p className="text-muted-foreground text-sm">
+          <div className="border-t border-gray-200 pt-8 text-center">
+            <p className="text-gray-500 text-sm">
               © 2024 MakerStack. All rights reserved.
             </p>
           </div>

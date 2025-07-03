@@ -42,7 +42,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onClear }) => {
       <div className={`relative transition-all duration-300 ${
         isActive ? 'scale-105' : ''
       }`}>
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
         <Input
           type="text"
           placeholder="Search articles, playbooks, and tools..."
@@ -50,7 +50,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onClear }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsActive(true)}
           onBlur={() => setIsActive(false)}
-          className="pl-12 pr-20 py-6 text-lg rounded-2xl border-border/40 bg-background/80 backdrop-blur-sm shadow-lg focus:shadow-xl transition-all duration-300"
+          className="pl-12 pr-20 py-6 text-lg rounded-2xl border-gray-300 bg-white shadow-lg focus:shadow-xl transition-all duration-300"
           aria-label="Search content"
         />
         {searchQuery && (
@@ -59,7 +59,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onClear }) => {
             variant="ghost"
             size="sm"
             onClick={handleClear}
-            className="absolute right-12 top-1/2 transform -translate-y-1/2 rounded-full hover:bg-surface-elevated"
+            className="absolute right-12 top-1/2 transform -translate-y-1/2 rounded-full hover:bg-gray-100"
             aria-label="Clear search"
           >
             <X className="h-4 w-4" />
@@ -67,7 +67,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onClear }) => {
         )}
         <Button 
           type="submit"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-xl"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 rounded-xl bg-gray-900 hover:bg-gray-800"
           size="sm"
           disabled={!searchQuery.trim()}
         >

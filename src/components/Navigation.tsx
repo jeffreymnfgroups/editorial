@@ -25,9 +25,10 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
       id: 'featured',
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Latest Articles', id: 'featured' },
-        { name: 'Editor\'s Picks', id: 'featured' },
-        { name: 'Trending Now', id: 'featured' }
+        { name: 'Latest Articles', id: 'featured', description: 'Most recent insights and tutorials' },
+        { name: 'Editor\'s Picks', id: 'featured', description: 'Handpicked content by our team' },
+        { name: 'Trending Now', id: 'featured', description: 'Popular content this week' },
+        { name: 'Deep Dives', id: 'featured', description: 'Comprehensive technical guides' }
       ]
     },
     {
@@ -35,10 +36,11 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
       id: 'playbooks',
       hasDropdown: true,
       dropdownItems: [
-        { name: 'SaaS Launch', id: 'playbooks' },
-        { name: 'Product Hunt', id: 'playbooks' },
-        { name: 'No-Code MVP', id: 'playbooks' },
-        { name: 'Marketing Toolkit', id: 'playbooks' }
+        { name: 'SaaS Launch Guide', id: 'playbooks', description: 'Complete launch strategy framework' },
+        { name: 'Product Hunt Kit', id: 'playbooks', description: 'Everything for a successful PH launch' },
+        { name: 'No-Code MVP Builder', id: 'playbooks', description: 'Build without coding knowledge' },
+        { name: 'Growth Marketing', id: 'playbooks', description: 'Proven growth tactics and strategies' },
+        { name: 'Fundraising Toolkit', id: 'playbooks', description: 'Pitch decks and investor guides' }
       ]
     },
     {
@@ -46,16 +48,24 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
       id: 'tools',
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Stack Builder', id: 'tools' },
-        { name: 'Analytics Dashboard', id: 'tools' },
-        { name: 'Market Validator', id: 'tools' },
-        { name: 'API Explorer', id: 'tools' }
+        { name: 'Stack Builder', id: 'tools', description: 'Choose the perfect tech stack' },
+        { name: 'Analytics Dashboard', id: 'tools', description: 'Track your key metrics' },
+        { name: 'Market Validator', id: 'tools', description: 'Validate your product ideas' },
+        { name: 'API Explorer', id: 'tools', description: 'Discover and test APIs' },
+        { name: 'Design System Generator', id: 'tools', description: 'Create consistent design languages' },
+        { name: 'Automation Builder', id: 'tools', description: 'Build workflows without code' }
       ]
     },
     {
       name: 'Reports',
       id: 'reports',
-      hasDropdown: false
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Growth Metrics', id: 'reports', description: 'Community and revenue insights' },
+        { name: 'Industry Trends', id: 'reports', description: 'Market analysis and forecasts' },
+        { name: 'Maker Insights', id: 'reports', description: 'Creator economy statistics' },
+        { name: 'Tool Reviews', id: 'reports', description: 'Comprehensive tool comparisons' }
+      ]
     }
   ];
 
@@ -67,14 +77,19 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
     setActiveDropdown(null);
   };
 
+  const handleDropdownItemClick = (id: string) => {
+    setActiveDropdown(null);
+    onSectionClick(id);
+  };
+
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-background/95 backdrop-blur-xl border-b border-border/40 shadow-sm' 
-        : 'bg-background/80 backdrop-blur-sm'
+        ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm' 
+        : 'bg-white/80 backdrop-blur-sm'
     }`}>
       <div className="container-premium flex items-center justify-between h-16">
-        <div className="text-xl font-semibold tracking-tight">MakerStack</div>
+        <div className="text-xl font-semibold tracking-tight text-gray-900">MakerStack</div>
         
         <div className="hidden md:flex items-center space-x-1">
           {navigationItems.map((item) => (
@@ -86,7 +101,7 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
             >
               <button
                 onClick={() => onSectionClick(item.id)}
-                className="flex items-center px-4 py-2 text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-lg hover:bg-surface-elevated/50"
+                className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 rounded-lg hover:bg-gray-100"
                 aria-expanded={activeDropdown === item.name}
                 aria-haspopup={item.hasDropdown}
               >
@@ -99,14 +114,22 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
               </button>
               
               {item.hasDropdown && activeDropdown === item.name && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-background/95 backdrop-blur-xl border border-border/40 rounded-2xl shadow-xl py-2 animate-in fade-in-0 slide-in-from-top-2 duration-200">
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 animate-in fade-in-0 slide-in-from-top-2 duration-200">
+                  <div className="px-4 py-2 border-b border-gray-100">
+                    <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                  </div>
                   {item.dropdownItems?.map((dropdownItem) => (
                     <button
                       key={dropdownItem.name}
-                      onClick={() => onSectionClick(dropdownItem.id)}
-                      className="w-full text-left px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-surface-elevated/50 transition-colors duration-150"
+                      onClick={() => handleDropdownItemClick(dropdownItem.id)}
+                      className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors duration-150 group"
                     >
-                      {dropdownItem.name}
+                      <div className="font-medium text-gray-900 group-hover:text-gray-700">
+                        {dropdownItem.name}
+                      </div>
+                      <div className="text-sm text-gray-500 mt-1">
+                        {dropdownItem.description}
+                      </div>
                     </button>
                   ))}
                 </div>
@@ -117,9 +140,9 @@ const Navigation: React.FC<NavigationProps> = ({ onSectionClick }) => {
         
         <Button 
           onClick={() => onSectionClick('subscribe')}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+          className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
         >
-          Upgrade
+          Subscribe
         </Button>
       </div>
     </nav>

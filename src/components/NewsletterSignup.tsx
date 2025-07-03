@@ -87,8 +87,8 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
             onChange={(e) => setEmail(e.target.value)}
             className={`${
               variant === 'hero' 
-                ? 'bg-background/70 backdrop-blur-sm border border-border/60 rounded-xl h-12' 
-                : 'bg-background/80 backdrop-blur-sm border border-border/60 rounded-xl h-12'
+                ? 'bg-white/70 backdrop-blur-sm border border-gray-300 rounded-xl h-12' 
+                : 'bg-white border border-gray-300 rounded-xl h-12'
             } ${error ? 'border-red-500' : ''}`}
             disabled={isLoading}
             aria-invalid={!!error}
@@ -104,7 +104,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
         <Button 
           type="submit" 
           disabled={isLoading}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl h-12 disabled:opacity-50"
+          className="bg-gray-900 hover:bg-gray-800 text-white px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl h-12 disabled:opacity-50"
         >
           {isLoading ? (
             <div className="flex items-center">
@@ -120,7 +120,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
         </Button>
       </div>
       {!error && (
-        <p className="text-sm text-muted-foreground mt-4 text-center">
+        <p className="text-sm text-gray-500 mt-4 text-center">
           No spam. Unsubscribe at any time.
         </p>
       )}

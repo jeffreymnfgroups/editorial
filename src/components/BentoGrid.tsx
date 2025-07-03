@@ -15,7 +15,6 @@ interface BentoCardProps {
   author?: string;
   readTime?: string;
   date?: string;
-  gradient?: string;
   onClick: (id: string) => void;
 }
 
@@ -35,7 +34,6 @@ const BentoCard: React.FC<BentoCardProps> = ({
   author,
   readTime,
   date,
-  gradient,
   onClick
 }) => {
   const sizeClasses = {
@@ -45,44 +43,46 @@ const BentoCard: React.FC<BentoCardProps> = ({
   };
 
   const typeColors = {
-    article: 'bg-blue-50 text-blue-700 border-blue-200',
-    tool: 'bg-purple-50 text-purple-700 border-purple-200',
-    playbook: 'bg-green-50 text-green-700 border-green-200',
-    featured: 'bg-orange-50 text-orange-700 border-orange-200'
+    article: 'bg-gray-100 text-gray-800 border-gray-200',
+    tool: 'bg-gray-900 text-white border-gray-800',
+    playbook: 'bg-white text-gray-900 border-gray-300',
+    featured: 'bg-black text-white border-gray-900'
   };
-
-  const backgroundStyle = gradient 
-    ? { background: gradient }
-    : image 
-    ? { backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-    : {};
 
   return (
     <Card 
       className={`
         ${sizeClasses[size]} 
         group cursor-pointer overflow-hidden
-        bg-white/80 backdrop-blur-sm border border-gray-200/60
+        bg-white border border-gray-200
         hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02]
         transition-all duration-500 ease-out
         rounded-3xl
       `}
       onClick={() => onClick(id)}
-      style={backgroundStyle}
     >
-      <div className={`h-full flex flex-col ${image ? 'bg-gradient-to-t from-black/60 via-black/20 to-transparent' : ''}`}>
-        <CardContent className="p-6 flex-1 flex flex-col justify-between relative">
-          {/* Content Overlay for Images */}
-          {image && <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-3xl" />}
-          
-          <div className="relative z-10">
+      <div className="h-full flex flex-col">
+        {/* Image Section */}
+        {image && (
+          <div className="aspect-video overflow-hidden relative">
+            <img 
+              src={image} 
+              alt={title}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
+        )}
+
+        <CardContent className="p-6 flex-1 flex flex-col justify-between">
+          <div>
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <Badge className={`${typeColors[type]} rounded-full px-3 py-1 text-xs font-medium`}>
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </Badge>
-              {icon && (
-                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-xl">
+              {icon && !image && (
+                <div className="p-2 bg-gray-100 rounded-xl">
                   {icon}
                 </div>
               )}
@@ -90,33 +90,31 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
             {/* Title */}
             <h3 className={`
-              font-semibold mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors
+              font-semibold mb-3 line-clamp-2 group-hover:text-gray-600 transition-colors text-gray-900
               ${size === 'large' ? 'text-2xl md:text-3xl' : size === 'medium' ? 'text-xl' : 'text-lg'}
-              ${image ? 'text-white' : 'text-gray-900'}
             `}>
               {title}
             </h3>
 
             {/* Description */}
             <p className={`
-              leading-relaxed mb-6 line-clamp-3
+              leading-relaxed mb-6 line-clamp-3 text-gray-600
               ${size === 'large' ? 'text-base' : 'text-sm'}
-              ${image ? 'text-gray-200' : 'text-gray-600'}
             `}>
               {description}
             </p>
           </div>
 
           {/* Footer */}
-          <div className="relative z-10 flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {author && (
                 <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
                     <User className="h-4 w-4 text-white" />
                   </div>
                   <div>
-                    <p className={`text-sm font-medium ${image ? 'text-white' : 'text-gray-900'}`}>
+                    <p className="text-sm font-medium text-gray-900">
                       {author}
                     </p>
                     {date && readTime && (
@@ -137,11 +135,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
             <Button
               variant="ghost"
               size="sm"
-              className={`
-                rounded-full p-2 group-hover:bg-blue-600 group-hover:text-white
-                transition-all duration-300 hover:scale-110
-                ${image ? 'text-white hover:bg-white/20' : 'text-gray-600'}
-              `}
+              className="rounded-full p-2 text-gray-600 hover:bg-gray-900 hover:text-white transition-all duration-300 hover:scale-110"
             >
               <ArrowRight className="h-4 w-4" />
             </Button>
