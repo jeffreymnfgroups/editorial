@@ -1,12 +1,10 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowDown, Mail, Search, FileText, BarChart3, CircleArrowRight, TrendingUp, Users, Download, Play, ExternalLink } from 'lucide-react';
-import heroImage from '@/assets/hero-bg.jpg';
+import { ArrowDown, Mail, Search, FileText, BarChart3, CircleArrowRight, TrendingUp, Users, Download, Play, ExternalLink, Zap, Code, Layers } from 'lucide-react';
 import author1 from '@/assets/author-1.jpg';
 import author2 from '@/assets/author-2.jpg';
 import playbookCover from '@/assets/playbook-1.jpg';
@@ -29,7 +27,7 @@ const Index = () => {
     }
     toast({
       title: "Successfully subscribed!",
-      description: "Welcome to Editorial Excellence. Check your inbox for confirmation.",
+      description: "Welcome to MakerStack. Check your inbox for confirmation.",
     });
     setEmail('');
   };
@@ -64,39 +62,39 @@ const Index = () => {
 
   const topics = [
     { name: "All", count: 541 },
-    { name: "Technology", count: 142 },
-    { name: "Business", count: 98 },
-    { name: "Leadership", count: 76 },
-    { name: "Innovation", count: 54 },
+    { name: "Development", count: 142 },
+    { name: "Design", count: 98 },
+    { name: "Product", count: 76 },
+    { name: "Growth", count: 54 },
     { name: "Analytics", count: 89 },
     { name: "Strategy", count: 67 },
     { name: "Marketing", count: 43 },
-    { name: "Finance", count: 32 }
+    { name: "Startup", count: 32 }
   ];
 
   const filteredArticles = [
     {
-      title: "AI Analytics Beyond the Hype",
-      excerpt: "Separating reality from marketing in AI analytics space",
+      title: "Building Scalable SaaS Architecture",
+      excerpt: "Modern patterns for building resilient, scalable applications",
       author: "Marcus Johnson",
       date: "Dec 12, 2024",
-      topic: "Technology",
+      topic: "Development",
       readTime: "8 min"
     },
     {
-      title: "Remote Work Economics",
-      excerpt: "How distributed teams reshape global economic models",
+      title: "Product-Led Growth Strategies",
+      excerpt: "How to build products that sell themselves through user experience",
       author: "Elena Rodriguez", 
       date: "Dec 10, 2024",
-      topic: "Business",
+      topic: "Product",
       readTime: "12 min"
     },
     {
-      title: "Leadership in Digital Age",
-      excerpt: "Evolving management strategies for modern teams",
+      title: "Design Systems at Scale",
+      excerpt: "Creating consistent, maintainable design languages for growing teams",
       author: "Sarah Chen",
       date: "Dec 8, 2024",
-      topic: "Leadership",
+      topic: "Design",
       readTime: "10 min"
     }
   ].filter(article => selectedTopic === 'All' || article.topic === selectedTopic);
@@ -106,43 +104,31 @@ const Index = () => {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-xl border-b border-border/40">
         <div className="container-premium flex items-center justify-between h-16">
-          <div className="text-xl font-semibold tracking-tight">Editorial</div>
+          <div className="text-xl font-semibold tracking-tight">MakerStack</div>
           <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('latest')} className="text-muted-foreground hover:text-foreground transition-colors">Latest</button>
+            <button onClick={() => scrollToSection('featured')} className="text-muted-foreground hover:text-foreground transition-colors">Featured</button>
             <button onClick={() => scrollToSection('playbooks')} className="text-muted-foreground hover:text-foreground transition-colors">Playbooks</button>
             <button onClick={() => scrollToSection('tools')} className="text-muted-foreground hover:text-foreground transition-colors">Tools</button>
             <button onClick={() => scrollToSection('reports')} className="text-muted-foreground hover:text-foreground transition-colors">Reports</button>
           </div>
           <Button 
             onClick={() => scrollToSection('subscribe')}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-2 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Subscribe
+            Upgrade
           </Button>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url(${heroImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/40 backdrop-blur-sm" />
-        </div>
-        
+      {/* Hero Section - Clean without background */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 bg-gradient-to-br from-background via-surface-elevated to-surface-secondary">
         <div className="container-premium relative z-10 text-center animate-fade-in">
           <div className="max-w-5xl mx-auto">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight leading-none mb-8 bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
-              Editorial Excellence
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-light tracking-tight leading-none mb-8 bg-gradient-to-r from-foreground via-foreground to-muted-foreground bg-clip-text text-transparent">
+              MakerStack
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-light">
-              Curated insights, exclusive frameworks, and data-driven intelligence for forward-thinking professionals
+              Premium insights, tools, and frameworks for makers building the future
             </p>
             
             {/* Newsletter Signup */}
@@ -153,9 +139,9 @@ const Index = () => {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/70 backdrop-blur-sm border border-border/60 rounded-xl"
+                  className="bg-background/70 backdrop-blur-sm border border-border/60 rounded-xl h-12"
                 />
-                <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl">
+                <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl h-12">
                   <Mail className="mr-2 h-4 w-4" />
                   Subscribe
                 </Button>
@@ -164,7 +150,7 @@ const Index = () => {
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
-                onClick={() => scrollToSection('latest')}
+                onClick={() => scrollToSection('featured')}
                 variant="outline" 
                 className="bg-background/70 backdrop-blur-sm border border-border/60 hover:bg-background/90 text-foreground px-8 py-4 rounded-2xl text-lg font-medium transition-all duration-300 hover:shadow-lg"
               >
@@ -184,7 +170,7 @@ const Index = () => {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Search articles, playbooks, and insights..."
+                placeholder="Search articles, playbooks, and tools..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 pr-4 py-6 text-lg rounded-2xl border-border/40 bg-background/80 backdrop-blur-sm shadow-lg focus:shadow-xl transition-all duration-300"
@@ -201,13 +187,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Bento Grid Section - Latest Insights */}
-      <section id="latest" className="section-padding">
+      {/* Featured Section - Bento Grid */}
+      <section id="featured" className="section-padding">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Latest Insights</h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Featured Content</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              Stay informed with our most recent analysis and actionable insights
+              Handpicked insights and resources for ambitious makers
             </p>
           </div>
           
@@ -235,7 +221,7 @@ const Index = () => {
               <div className="h-full flex flex-col">
                 <div className="aspect-video bg-gradient-to-br from-primary/10 via-primary/5 to-transparent flex items-center justify-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <BarChart3 className="h-16 w-16 text-primary/40 group-hover:text-primary/60 transition-colors duration-500" />
+                  <Code className="h-16 w-16 text-primary/40 group-hover:text-primary/60 transition-colors duration-500" />
                   <div className="absolute top-4 right-4">
                     <Play className="h-8 w-8 text-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
@@ -244,10 +230,10 @@ const Index = () => {
                   <div>
                     <Badge className="w-fit mb-4 bg-primary/10 text-primary border-primary/20 rounded-full px-4 py-1">Featured</Badge>
                     <h3 className="text-2xl font-semibold mb-4 group-hover:text-primary transition-colors line-clamp-2">
-                      Digital Transformation Outlook 2024
+                      The Future of No-Code Development
                     </h3>
                     <p className="text-muted-foreground mb-6 leading-relaxed line-clamp-3">
-                      Comprehensive analysis of how organizations are adapting to technological change and future workforce dynamics.
+                      How visual development platforms are democratizing software creation and empowering a new generation of makers.
                     </p>
                   </div>
                   <div className="flex items-center justify-between">
@@ -272,18 +258,18 @@ const Index = () => {
                 <div className="bg-primary/10 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
                   <Users className="h-8 w-8 text-primary" />
                 </div>
-                <div className="text-3xl font-light text-primary mb-2">12.4k</div>
-                <div className="text-sm text-muted-foreground">Active Readers</div>
+                <div className="text-3xl font-light text-primary mb-2">24.7k</div>
+                <div className="text-sm text-muted-foreground">Active Makers</div>
               </CardContent>
             </Card>
 
             <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
               <CardContent className="p-6 text-center">
                 <div className="bg-primary/10 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-                  <TrendingUp className="h-8 w-8 text-primary" />
+                  <Zap className="h-8 w-8 text-primary" />
                 </div>
-                <div className="text-3xl font-light text-primary mb-2">89%</div>
-                <div className="text-sm text-muted-foreground">Retention Rate</div>
+                <div className="text-3xl font-light text-primary mb-2">156</div>
+                <div className="text-sm text-muted-foreground">Tools Built</div>
               </CardContent>
             </Card>
 
@@ -317,104 +303,175 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Playbooks Bento Grid */}
-      <section id="playbooks" className="section-padding">
+      {/* Playbooks Section - 70/30 Split */}
+      <section id="playbooks" className="section-padding bg-surface-secondary/30">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Premium Resources</h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Maker Playbooks</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              Exclusive frameworks and guides from industry leaders
+              Step-by-step guides and frameworks from successful makers
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Digital Strategy Framework",
-                description: "Complete guide to building transformation strategies",
-                downloads: "2.1k",
-                image: playbookCover,
-                fileSize: "4.2 MB"
-              },
-              {
-                title: "Revenue Growth Playbook", 
-                description: "Proven tactics for scaling in competitive markets",
-                downloads: "1.8k",
-                image: playbookCover,
-                fileSize: "3.8 MB"
-              },
-              {
-                title: "Leadership Excellence",
-                description: "Modern approaches to high-performance teams",
-                downloads: "3.2k",
-                image: playbookCover,
-                fileSize: "5.1 MB"
-              }
-            ].map((playbook, index) => (
-              <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden hover:-translate-y-2 cursor-pointer">
-                <div className="aspect-[4/3] overflow-hidden relative">
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
+            {/* Left Side - 70% */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Main Playbook Card */}
+              <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden hover:-translate-y-2 cursor-pointer">
+                <div className="aspect-[16/9] overflow-hidden relative">
                   <img 
-                    src={playbook.image} 
-                    alt={playbook.title}
+                    src={playbookCover} 
+                    alt="SaaS Launch Playbook"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-medium">
-                    {playbook.fileSize}
+                  <div className="absolute top-6 right-6 bg-background/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium">
+                    Premium
                   </div>
                 </div>
                 <CardContent className="p-8">
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">{playbook.title}</h3>
+                  <h3 className="text-2xl font-semibold mb-4 group-hover:text-primary transition-colors">
+                    The Complete SaaS Launch Playbook
+                  </h3>
                   <p className="text-muted-foreground mb-6 leading-relaxed">
-                    {playbook.description}
+                    From idea validation to first paying customers. A comprehensive guide covering market research, MVP development, pricing strategy, and growth tactics.
                   </p>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm text-muted-foreground">{playbook.downloads} downloads</span>
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-sm text-muted-foreground">4.2k downloads</span>
+                    <Badge className="bg-primary/10 text-primary border-primary/20">142 pages</Badge>
                   </div>
                   <Button 
-                    onClick={() => handleDownload(playbook.title)}
-                    variant="outline" 
-                    className="w-full rounded-2xl border-border/60 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                    onClick={() => handleDownload("SaaS Launch Playbook")}
+                    className="w-full rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300"
                   >
                     <Download className="mr-2 h-4 w-4" />
-                    Download PDF
+                    Download Playbook
                   </Button>
                 </CardContent>
               </Card>
-            ))}
+
+              {/* Three Sub-cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: "Product Hunt Launch Guide",
+                    downloads: "1.8k",
+                    pages: "24"
+                  },
+                  {
+                    title: "No-Code MVP Builder",
+                    downloads: "2.1k", 
+                    pages: "36"
+                  },
+                  {
+                    title: "Maker Marketing Toolkit",
+                    downloads: "1.5k",
+                    pages: "28"
+                  }
+                ].map((playbook, index) => (
+                  <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer">
+                    <CardContent className="p-6">
+                      <div className="bg-primary/10 rounded-xl w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                        <FileText className="h-6 w-6 text-primary" />
+                      </div>
+                      <h4 className="font-semibold mb-2 group-hover:text-primary transition-colors">{playbook.title}</h4>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                        <span>{playbook.downloads} downloads</span>
+                        <span>{playbook.pages} pages</span>
+                      </div>
+                      <Button 
+                        onClick={() => handleDownload(playbook.title)}
+                        variant="outline" 
+                        size="sm"
+                        className="w-full rounded-xl border-border/60 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                      >
+                        Download
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Side - 30% */}
+            <div className="lg:col-span-3">
+              <Card className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg sticky top-24">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold mb-6">Trending Topics</h3>
+                  <div className="space-y-4">
+                    {[
+                      { topic: "AI Integration", engagement: "94%", trend: "+12%" },
+                      { topic: "No-Code Tools", engagement: "87%", trend: "+8%" },
+                      { topic: "Product Strategy", engagement: "82%", trend: "+15%" },
+                      { topic: "Growth Hacking", engagement: "79%", trend: "+6%" },
+                      { topic: "User Research", engagement: "76%", trend: "+11%" }
+                    ].map((item, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 rounded-xl hover:bg-surface-elevated transition-colors duration-300 cursor-pointer group">
+                        <div>
+                          <p className="font-medium group-hover:text-primary transition-colors">{item.topic}</p>
+                          <p className="text-sm text-muted-foreground">{item.engagement} engagement</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-medium text-green-600">{item.trend}</p>
+                          <TrendingUp className="h-4 w-4 text-green-600 ml-auto" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Tools Bento Grid */}
-      <section id="tools" className="section-padding bg-surface-secondary/50">
+      {/* Tools Section */}
+      <section id="tools" className="section-padding">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Interactive Tools</h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Maker Tools</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              Enhance your workflow with intelligent utilities
+              Powerful utilities to accelerate your building process
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                icon: <Search className="h-10 w-10" />,
-                title: "Market Research Assistant",
-                description: "AI-powered competitive analysis and market insights",
-                status: "Beta"
-              },
-              {
-                icon: <BarChart3 className="h-10 w-10" />,
-                title: "Strategy Canvas",
-                description: "Visual business model development and planning",
+                icon: <Layers className="h-10 w-10" />,
+                title: "Stack Builder",
+                description: "Curate and compare tech stacks for your next project",
                 status: "New"
               },
               {
-                icon: <FileText className="h-10 w-10" />,
-                title: "Report Generator",
-                description: "Automated business insights and executive summaries",
+                icon: <BarChart3 className="h-10 w-10" />,
+                title: "Analytics Dashboard",
+                description: "Track your product metrics and user engagement",
                 status: "Popular"
+              },
+              {
+                icon: <Search className="h-10 w-10" />,
+                title: "Market Validator",
+                description: "Research and validate your product ideas",
+                status: "Beta"
+              },
+              {
+                icon: <Code className="h-10 w-10" />,
+                title: "API Explorer",
+                description: "Discover and test APIs for your applications",
+                status: "Featured"
+              },
+              {
+                icon: <Zap className="h-10 w-10" />,
+                title: "Automation Builder",
+                description: "Create workflows without writing code",
+                status: "Premium"
+              },
+              {
+                icon: <FileText className="h-10 w-10" />,
+                title: "Documentation Generator",
+                description: "Auto-generate docs from your codebase",
+                status: "Coming Soon"
               }
             ].map((tool, index) => (
               <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group text-center hover:-translate-y-1 cursor-pointer">
@@ -438,7 +495,7 @@ const Index = () => {
                     variant="outline" 
                     className="w-full rounded-2xl border-border/60 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
                   >
-                    Launch Tool
+                    Try Now
                   </Button>
                 </CardContent>
               </Card>
@@ -448,21 +505,21 @@ const Index = () => {
       </section>
 
       {/* Income Reports */}
-      <section id="reports" className="section-padding">
+      <section id="reports" className="section-padding bg-surface-secondary/30">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Performance Analytics</h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Growth Metrics</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              Transparent insights into our growth and reader engagement
+              Transparent insights into our community growth and engagement
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { metric: "Monthly Revenue", value: "$47.2k", change: "+12.5%", trend: "up" },
-              { metric: "Subscriber Growth", value: "3,247", change: "+18.3%", trend: "up" },
-              { metric: "Engagement Rate", value: "94.7%", change: "+2.1%", trend: "up" },
-              { metric: "Content Views", value: "127k", change: "+24.8%", trend: "up" }
+              { metric: "Monthly Revenue", value: "$67.4k", change: "+18.2%", trend: "up" },
+              { metric: "Active Makers", value: "24.7k", change: "+24.1%", trend: "up" },
+              { metric: "Tools Created", value: "156", change: "+31.5%", trend: "up" },
+              { metric: "Community Growth", value: "89.3%", change: "+12.7%", trend: "up" }
             ].map((report, index) => (
               <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
                 <CardContent className="p-6">
@@ -479,32 +536,91 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Topics Grid */}
+      {/* Latest Articles - 2x3 Bento Grid */}
       <section className="section-padding">
         <div className="container-premium">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Browse Topics</h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Latest Articles</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              Explore our comprehensive content library
+              Fresh insights and tutorials from the maker community
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {topics.map((topic, index) => (
-              <Card 
-                key={index} 
-                onClick={() => setSelectedTopic(topic.name)}
-                className={`bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer hover:-translate-y-1 ${
-                  selectedTopic === topic.name ? 'ring-2 ring-primary ring-offset-2 bg-primary/5' : ''
-                }`}
-              >
-                <CardContent className="p-6 text-center">
-                  <h3 className={`font-semibold mb-2 transition-colors ${
-                    selectedTopic === topic.name ? 'text-primary' : 'group-hover:text-primary'
-                  }`}>
-                    {topic.name}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Building Your First SaaS in 30 Days",
+                excerpt: "A step-by-step guide to launching your minimum viable product",
+                author: "Alex Rivera",
+                date: "Dec 14, 2024",
+                category: "Tutorial",
+                readTime: "12 min"
+              },
+              {
+                title: "The Psychology of Product Pricing",
+                excerpt: "How to price your product for maximum conversion and growth",
+                author: "Maya Patel",
+                date: "Dec 13, 2024", 
+                category: "Strategy",
+                readTime: "8 min"
+              },
+              {
+                title: "No-Code vs Low-Code: Which to Choose?",
+                excerpt: "Comparing platforms and making the right choice for your project",
+                author: "Jordan Kim",
+                date: "Dec 12, 2024",
+                category: "Development",
+                readTime: "10 min"
+              },
+              {
+                title: "User Onboarding That Converts",
+                excerpt: "Design patterns and strategies for better user activation",
+                author: "Sam Chen",
+                date: "Dec 11, 2024",
+                category: "UX Design",
+                readTime: "15 min"
+              },
+              {
+                title: "Scaling Your Side Project",
+                excerpt: "When and how to transition from hobby to business",
+                author: "Taylor Swift",
+                date: "Dec 10, 2024",
+                category: "Business",
+                readTime: "11 min"
+              },
+              {
+                title: "API-First Development Approach",
+                excerpt: "Building scalable applications with API-first architecture",
+                author: "Chris Park",
+                date: "Dec 9, 2024",
+                category: "Development",
+                readTime: "14 min"
+              }
+            ].map((article, index) => (
+              <Card key={index} className="bg-gradient-to-br from-card to-surface-elevated border border-border/40 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 cursor-pointer">
+                <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-t-3xl flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <FileText className="h-12 w-12 text-primary/40 group-hover:text-primary/60 transition-colors duration-500" />
+                </div>
+                <CardContent className="p-6">
+                  <Badge className="w-fit mb-3 bg-surface-secondary text-muted-foreground border-border/40 rounded-full px-3 py-1 text-xs">
+                    {article.category}
+                  </Badge>
+                  <h3 className="text-lg font-semibold mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                    {article.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground">{topic.count} articles</p>
+                  <p className="text-muted-foreground mb-4 text-sm leading-relaxed line-clamp-2">
+                    {article.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium">{article.author}</p>
+                      <p className="text-xs text-muted-foreground">{article.date} • {article.readTime}</p>
+                    </div>
+                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary transition-colors">
+                      Read More
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -513,12 +629,12 @@ const Index = () => {
       </section>
 
       {/* Newsletter Subscription Section */}
-      <section id="subscribe" className="section-padding bg-surface-secondary/30">
+      <section id="subscribe" className="section-padding bg-surface-secondary/50">
         <div className="container-premium">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Stay Informed</h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-6">Join the Community</h2>
             <p className="text-xl text-muted-foreground mb-8 font-light">
-              Join thousands of professionals receiving our weekly insights
+              Get weekly insights, tools, and resources delivered to your inbox
             </p>
             <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
               <div className="flex gap-3">
@@ -527,9 +643,9 @@ const Index = () => {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background/80 backdrop-blur-sm border border-border/60 rounded-xl"
+                  className="bg-background/80 backdrop-blur-sm border border-border/60 rounded-xl h-12"
                 />
-                <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl">
+                <Button type="submit" className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 rounded-xl font-medium transition-all duration-300 shadow-xl hover:shadow-2xl h-12">
                   Subscribe
                 </Button>
               </div>
@@ -544,17 +660,45 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t border-border/40 bg-surface-secondary/30 backdrop-blur-xl">
         <div className="container-premium py-16">
-          <div className="text-center">
-            <div className="text-2xl font-semibold mb-4">Editorial</div>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Premium insights for forward-thinking professionals
-            </p>
-            <div className="flex justify-center space-x-6">
-              <button className="text-muted-foreground hover:text-primary transition-colors">About</button>
-              <button className="text-muted-foreground hover:text-primary transition-colors">Privacy</button>
-              <button className="text-muted-foreground hover:text-primary transition-colors">Terms</button>
-              <button className="text-muted-foreground hover:text-primary transition-colors">Contact</button>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="text-xl font-semibold mb-4">MakerStack</div>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Empowering makers with premium insights, tools, and community.
+              </p>
             </div>
+            <div>
+              <h4 className="font-semibold mb-4">Content</h4>
+              <div className="space-y-2">
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Articles</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Playbooks</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Tools</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Reports</button>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Community</h4>
+              <div className="space-y-2">
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Discord</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Twitter</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">GitHub</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Newsletter</button>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <div className="space-y-2">
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">About</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Privacy</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Terms</button>
+                <button className="block text-muted-foreground hover:text-primary transition-colors text-sm">Contact</button>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-border/40 pt-8 text-center">
+            <p className="text-muted-foreground text-sm">
+              © 2024 MakerStack. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>
